@@ -1,8 +1,22 @@
 import os
+import threading
+from flask import Flask
 import telebot
 import requests
 
-BOT_TOKEN = "8966675976:AAGxJPlV6f-SE7htoUQrLmYylxxW78vpqc8"
+# Фейковый веб-сервер для обмана Render Web Service
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Bot is running!"
+
+def run_flask():
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host='0.0.0.0', port=port)
+
+# Настройки бота
+BOT_TOKEN = "8966675976:AAGxJP1V6f-SE7htoUQrLmYylxxW78vpqc8"
 MARKET_API_KEY = "idKSeCHgGxKs2mDBU7HGPKHDDyUxnzIP6S"
 API_BASE_URL = "https://id.majestic-rp.ru/api"
 
@@ -66,8 +80,10 @@ def callback_inline(call):
                     text += f"• **{item.get('title', 'Товар')}** — {item.get('price', 0)} $\n"
                 bot.edit_message_text(text, call.message.chat.id, call.message.message_id, reply_markup=main_keyboard(), parse_mode="Markdown")
     except Exception as e:
-        print(f"Игнорируем ошибку модификации сообщения: {e}")
+        print(f"Игнорируем ошибку обновления сообщения: {e}")
 
 if __name__ == '__main__':
-    print("Бот запущен на Render!")
+    # Запускаем Flask в отдельном потоке
+    threading.Thread(target=run_flask, daemon=True).start()
+    print("Бот и веб-сервер запущены на Render!")
     bot.infinity_polling()
