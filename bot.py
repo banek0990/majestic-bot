@@ -16,7 +16,7 @@ def run_flask():
     app.run(host='0.0.0.0', port=port)
 
 # Настройки бота
-BOT_TOKEN = "8966675976:AAGxJP1V6f-SE7htoUQrLmYylxxW78vpqc8"
+BOT_TOKEN = "8966675976:AAGxJPlV6f-SE7htoUQrLmYylxxW78vpqc8"
 MARKET_API_KEY = "idKSeCHgGxKs2mDBU7HGPKHDDyUxnzIP6S"
 API_BASE_URL = "https://id.majestic-rp.ru/api"
 
